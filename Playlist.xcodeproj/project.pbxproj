@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E6154C1288DDD1100BA2694 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6154C0288DDD1100BA2694 /* AlertView.swift */; };
 		2E7C14F72887666300E8E2C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C14F62887666300E8E2C8 /* AppDelegate.swift */; };
 		2E7C14F92887666300E8E2C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C14F82887666300E8E2C8 /* SceneDelegate.swift */; };
 		2E7C14FB2887666300E8E2C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C14FA2887666300E8E2C8 /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E6154C0288DDD1100BA2694 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		2E7C14F32887666300E8E2C8 /* Playlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Playlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E7C14F62887666300E8E2C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2E7C14F82887666300E8E2C8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +45,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E6154BF288DDCFC00BA2694 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2E6154C0288DDD1100BA2694 /* AlertView.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		2E7C14EA2887666300E8E2C8 = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +72,7 @@
 		2E7C14F52887666300E8E2C8 /* Playlist */ = {
 			isa = PBXGroup;
 			children = (
+				2E6154BF288DDCFC00BA2694 /* Utils */,
 				2E7C150E2887782600E8E2C8 /* Model */,
 				2E7C14F62887666300E8E2C8 /* AppDelegate.swift */,
 				2E7C14F82887666300E8E2C8 /* SceneDelegate.swift */,
@@ -157,6 +168,7 @@
 			files = (
 				2E7C150D2887762200E8E2C8 /* Network.swift in Sources */,
 				2E7C14FB2887666300E8E2C8 /* ViewController.swift in Sources */,
+				2E6154C1288DDD1100BA2694 /* AlertView.swift in Sources */,
 				2E7C15102887783800E8E2C8 /* User.swift in Sources */,
 				2E7C14F72887666300E8E2C8 /* AppDelegate.swift in Sources */,
 				2E7C14F92887666300E8E2C8 /* SceneDelegate.swift in Sources */,
