@@ -26,7 +26,6 @@ class RegisterViewController: UIViewController {
         [nameTextField, userTextField].forEach({ $0?.addTarget(self,
                                                                action: #selector(editingChanged),
                                                                for: .editingChanged)})
-        
     }
     
     //Ação de clicar no registerButton
