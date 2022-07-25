@@ -12,14 +12,14 @@ class AlertView: NSObject {
     class func showAlert(view: UIViewController,
                          title: String,
                          message: String,
-                         cancelButton: String?,
-                         okButton: String?,
+                         cancelButton: String? = "Cancel",
+                         okButton: String? = "Ok",
                          onComplete: @escaping () -> Void) {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: cancelButton ?? "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(title: okButton ?? "Ok",
+        alert.addAction(UIAlertAction(title: cancelButton, style: .cancel))
+        alert.addAction(UIAlertAction(title: okButton,
                                       style: .default,
                                       handler: { alert in
             onComplete()

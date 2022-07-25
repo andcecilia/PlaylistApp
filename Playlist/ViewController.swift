@@ -46,6 +46,10 @@ class ViewController: UIViewController {
                         //Fazer condição para verificar se o usuário passado na variável declarada é igual a algum listado no userResponse
                         if $0.username == self.username {
                             // Se existir, iremos criar a tela de lista de musicas e chamar ela passando o parametro 'userTextField.text'
+                            
+                            // Chamar a função que chama a tela de músicas
+                            self.showMusicListViewController()
+                            
                             debugPrint("PASSOU")
                         } else {
                             //Se nao existir, mandar uma alert com a mensagem de 'usuario nao cadastrado' e com o botao de ok, enviar para tela RegisterViewController
@@ -53,7 +57,6 @@ class ViewController: UIViewController {
                                 AlertView.showAlert(view: self,
                                                     title: "ops",
                                                     message: "user not registered",
-                                                    cancelButton: "Cancel",
                                                     okButton: "Register",
                                                     onComplete: { self.showRegisterViewController() })
                             }
@@ -73,12 +76,25 @@ class ViewController: UIViewController {
         showRegisterViewController()
     }
 
+    // Chama a RegisterViewController
     private func showRegisterViewController() {
+        // Instancia a Storyboard que a ViewController está
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // Instancia a ViewController a ser chamada
         if let registerViewController = storyboard.instantiateViewController(withIdentifier: "RegisterViewController") as? RegisterViewController {
             
             self.navigationController?.pushViewController(registerViewController, animated: true)
         }
+    }
+    
+    // TODO: Criar função que chama a tela de lista de músicas (MusicListViewController) passando `username` como parâmetro
+    private func showMusicListViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let musicListViewController = storyboard.instantiateViewController(withIdentifier: "MusicListViewController") as? MusicListViewController {
+                    
+                    self.navigationController?.pushViewController(musicListViewController, animated: true)
+                }
     }
     
     // Função que verifica se as UITextField estão vazias e habilita/desabilita o botão

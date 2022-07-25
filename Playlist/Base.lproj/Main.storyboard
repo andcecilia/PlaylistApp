@@ -159,6 +159,21 @@
             </objects>
             <point key="canvasLocation" x="1796" y="110"/>
         </scene>
+        <!--Music List View Controller-->
+        <scene sceneID="AiS-xk-23g">
+            <objects>
+                <viewController storyboardIdentifier="MusicListViewController" id="Et0-lL-iFm" customClass="MusicListViewController" customModule="Playlist" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vFp-cy-f2g">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="XWa-Cr-Qgz"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cJJ-4e-kPG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2700" y="129"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="lcK-Ml-0c9">
             <objects>
