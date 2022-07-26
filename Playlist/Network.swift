@@ -35,7 +35,7 @@ class Network {
             do {
                 let result = try JSONDecoder().decode([User].self, from: data)
                 completion(.success(result))
-                print(result)
+                debugPrint(result)
             } catch {
                 completion(.failure(.invalidJSON))
             }
