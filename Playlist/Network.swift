@@ -16,8 +16,9 @@ class Network {
     static let shared = Network()
     
     enum UrlEndpoint: String {
-            case api = "http://localhost:8080/"
+        case api = "http://localhost:8080/"
     }
+    
     enum Endpoint: String {
         case user = "user"
         case music = "music"
@@ -44,10 +45,9 @@ class Network {
     }
     
     func postUser(name: String, username: String) {
-        guard let url = URL(string: "http://localhost:8080/user") else {
+        guard let url = URL(string: UrlEndpoint.api.rawValue + Endpoint.user.rawValue) else {
             return
         }
-
         
         do {
             var request = URLRequest(url: url)
@@ -68,9 +68,11 @@ class Network {
                 
                 switch response.statusCode {
                 case 200 ..< 300:
+                    // TODO: criar um bloco de @escaping para poder apresentar o lottie de `check`
                     debugPrint("Deu bom")
                     
                 case 400 ..< 500:
+                    // TODO: criar um bloco de @escaping para poder apresentar um alert contendo uma mensagem de erro
                     debugPrint("StatusCode: \(response.statusCode)")
                     
                 default:
@@ -79,10 +81,46 @@ class Network {
                 
             }
             
-            //let task = URLSession.shared.dataTask(with: request)
             task.resume()
         }
-        
     }
-                            
-}
+        
+        func postMusic(artist: String, title: String) {
+            guard let url = URL(string: UrlEndpoint.api.rawValue + Endpoint.music.rawValue) else {
+                return
+            }
+            
+            do {
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                let body: [String: AnyHashable] = [
+                    "artist": artist,
+                    "title": title,
+                ]
+                
+                let data = try? JSONSerialization.data(withJSONObject: body, options: [])
+                request.httpBody = data
+                
+                let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                    guard let response = response as? HTTPURLResponse else {
+                        return
+                    }
+                    
+                    switch response.statusCode {
+                    case 200 ..< 300:
+                        debugPrint("Deu bom cadastrar a música")
+                        
+                    case 400 ..< 500:
+                        debugPrint("StatusCode: \(response.statusCode)")
+                        
+                    default:
+                        return
+                    }
+                    
+                }
+                
+                task.resume()
+            }
+        }
+    }
