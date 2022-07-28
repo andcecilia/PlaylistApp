@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import Foundation
 
 // TODO: Criar a model `Music
 class MusicListViewController: UIViewController {
+    
+    var id = 0
     
     // TODO: Criar o botão de `+`
     private lazy var addMusicButton: UIButton = {
@@ -23,45 +26,52 @@ class MusicListViewController: UIViewController {
     //TODO: Conectar as Outlets
     @IBOutlet weak var tableView: UITableView!
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addMusicButton)
-
+        
     }
     
     
     // TODO: Criar função para adicionar artista e música
     @objc func didTapAddMusicButton() {
-        var artist = String()
-        var title = String()
         
         // TODO: criar o alert para pegar as informações de `artist` e `title`
-        let alert = UIAlertController(title: String(),
-                                      message: "Input text",
+        let alert = UIAlertController(title: "Teste",
+                                      message: "Teste",
                                       preferredStyle: .alert)
         
-        alert.addTextField { (textField) in
-            textField.placeholder = "Artist Name"
-            artist = textField.text!
-        }
-        alert.addTextField { (textField) in
-            textField.placeholder = "Music Title"
-            title = textField.text!
+        alert.addTextField { firstTextfield in
+            firstTextfield.placeholder = "Type the artist name"
         }
         
-        // TODO: Adicionar o botão de ok e chamar a função de post
+        alert.addTextField { secondTextField in
+            secondTextField.placeholder = "Type the music title"
+        }
         
-        self.present(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Add",
+                                      style: .default,
+                                      handler: { [weak alert] _ in
+            guard let textFields = alert?.textFields else { return }
+            if let firstText = textFields[0].text,
+               let secondText = textFields[1].text {
+                
+                // Chamar a função para fazer o `post` de `artist` e `title` como parâmetros
+                self.postMusic(artist: firstText, title: secondText)
+            }
+        }))
         
-        
-         // Chamar a função para fazer o `post` de `artist` e `title` como parâmetros
-        postMusic(artist: artist, title: title)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
     }
-
+    
     // TODO: Criar função para fazer o `post` de `artist` e `title` como parâmetros
     func postMusic(artist: String, title: String) {
-        Network.shared.postMusic(artist: artist, title: title)
+        id += 1
+        Network.shared.postMusic(id: id, artist: artist, title: title, username: "Ceci")
     }
-
 }
+

@@ -85,7 +85,7 @@ class Network {
         }
     }
         
-        func postMusic(artist: String, title: String) {
+    func postMusic(id: Int, artist: String, title: String, username: String) {
             guard let url = URL(string: UrlEndpoint.api.rawValue + Endpoint.music.rawValue) else {
                 return
             }
@@ -95,8 +95,10 @@ class Network {
                 request.httpMethod = "POST"
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 let body: [String: AnyHashable] = [
+                    "id": id,
                     "artist": artist,
                     "title": title,
+                    "username": username
                 ]
                 
                 let data = try? JSONSerialization.data(withJSONObject: body, options: [])

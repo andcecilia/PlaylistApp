@@ -8,6 +8,8 @@
 import Foundation
 
 struct Music: Codable {
+    let id: Int?
     let artist: String?
     let title: String?
+    let username: String?
 }
