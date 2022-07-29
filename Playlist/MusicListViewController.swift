@@ -12,6 +12,7 @@ import Foundation
 class MusicListViewController: UIViewController {
     
     var id = 0
+    var musicList = [Music]()
     
     // TODO: Criar o botão de `+`
     private lazy var addMusicButton: UIButton = {
@@ -31,8 +32,15 @@ class MusicListViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addMusicButton)
         
+        setUpTableView()
     }
     
+    private func setUpTableView() {
+           // TODO: Registrar a célula (XIB)
+           tableView.register(cellType: MusicTableViewCell.self)
+           
+           tableView.dataSource = self
+       }
     
     // TODO: Criar função para adicionar artista e música
     @objc func didTapAddMusicButton() {
@@ -75,3 +83,19 @@ class MusicListViewController: UIViewController {
     }
 }
 
+//MARK: - TableViewDataSource Extension
+extension MusicListViewController: UITableViewDataSource {
+    // TODO: Retornar a quantidade de itens da lista
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1 //musicList.count
+    }
+    
+    
+    // TODO: Instanciar a célula (XIB) e passar as informações vindas de cada linha (IndexPath) para preencher a célula
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: MusicTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+        //cell.musicLayout = musicList[indexPath.row]
+        return cell
+        
+    }
+}

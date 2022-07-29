@@ -125,4 +125,23 @@ class Network {
                 task.resume()
             }
         }
+    
+    func fetchMusic(username: String,
+                    completion: @escaping (Result<[Music]?, Error>) -> Void) {
+        guard let url = URL(string: UrlEndpoint.api.rawValue + "users/" + username + "/\(Endpoint.music.rawValue))" ) else {
+            return
+        }
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
+            guard let data = data, error == nil else { return }
+            do {
+                let result = try JSONDecoder().decode([Music].self, from: data)
+                completion(.success(result))
+                debugPrint(result)
+            } catch {
+                debugPrint(error.localizedDescription)
+            }
+        }
+        task.resume()
     }
+    
+}
