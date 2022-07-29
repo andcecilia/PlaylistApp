@@ -128,7 +128,7 @@ class Network {
     
     func fetchMusic(username: String,
                     completion: @escaping (Result<[Music]?, Error>) -> Void) {
-        guard let url = URL(string: UrlEndpoint.api.rawValue + "users/" + username + "/\(Endpoint.music.rawValue))" ) else {
+        guard let url = URL(string: UrlEndpoint.api.rawValue + "users/" + username + "/\(Endpoint.music.rawValue)" ) else {
             return
         }
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in

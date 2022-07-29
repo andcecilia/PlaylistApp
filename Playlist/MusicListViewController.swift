@@ -33,6 +33,8 @@ class MusicListViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addMusicButton)
         
         setUpTableView()
+        
+        fetchMusicList(username: "Ceci")
     }
     
     private func setUpTableView() {
@@ -80,6 +82,29 @@ class MusicListViewController: UIViewController {
     func postMusic(artist: String, title: String) {
         id += 1
         Network.shared.postMusic(id: id, artist: artist, title: title, username: "Ceci")
+        
+        fetchMusicList(username: "Ceci")
+    }
+    
+
+    
+    // TODO: Fazer a requisição para o backend
+    func fetchMusicList(username: String) {
+        Network.shared.fetchMusic(username: username, completion: { result in
+            switch result {
+            case .success(let musicResponse):
+                //if the result carries an optional value, it should be unwrapped or given two ?? optional chains and the data type as a default value.
+                self.musicList = musicResponse ?? []
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                debugPrint(error)
+            }
+        })
+        
+        
     }
 }
 
@@ -87,14 +112,14 @@ class MusicListViewController: UIViewController {
 extension MusicListViewController: UITableViewDataSource {
     // TODO: Retornar a quantidade de itens da lista
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 //musicList.count
+        return musicList.count
     }
     
     
     // TODO: Instanciar a célula (XIB) e passar as informações vindas de cada linha (IndexPath) para preencher a célula
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: MusicTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-        //cell.musicLayout = musicList[indexPath.row]
+        cell.musicLayout = musicList[indexPath.row]
         return cell
         
     }

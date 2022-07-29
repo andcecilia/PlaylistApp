@@ -16,8 +16,10 @@ class MusicTableViewCell: UITableViewCell, NibReusable {
             // TODO: Utilizar o `didSet` para podermos inicializar as informações e não vir nulas
             didSet {
                 guard let musicLayout = musicLayout else { return }
-                musicTitleLabel.text = musicLayout.title
-                artistLabel.text = musicLayout.artist
+                musicTitleLabel.text = musicLayout.title?.capitalized
+                musicTitleLabel.font = .boldSystemFont(ofSize: 20)
+                artistLabel.text = musicLayout.artist?.capitalized
+                artistLabel.font = .systemFont(ofSize: 14, weight: .thin)
             }
         }
     
