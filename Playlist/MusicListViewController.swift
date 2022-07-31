@@ -38,11 +38,10 @@ class MusicListViewController: UIViewController {
     }
     
     private func setUpTableView() {
-           // TODO: Registrar a célula (XIB)
-           tableView.register(cellType: MusicTableViewCell.self)
-           
-           tableView.dataSource = self
-       }
+        // TODO: Registrar a célula (XIB)
+        tableView.register(cellType: MusicTableViewCell.self)
+        tableView.dataSource = self
+    }
     
     // TODO: Criar função para adicionar artista e música
     @objc func didTapAddMusicButton() {
@@ -83,10 +82,12 @@ class MusicListViewController: UIViewController {
         id += 1
         Network.shared.postMusic(id: id, artist: artist, title: title, username: "Ceci")
         
-        fetchMusicList(username: "Ceci")
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+            self.fetchMusicList(username: "Ceci")
+            self.tableView.reloadData()
+        }
+        
     }
-    
-
     
     // TODO: Fazer a requisição para o backend
     func fetchMusicList(username: String) {
@@ -94,9 +95,9 @@ class MusicListViewController: UIViewController {
             switch result {
             case .success(let musicResponse):
                 //if the result carries an optional value, it should be unwrapped or given two ?? optional chains and the data type as a default value.
-                self.musicList = musicResponse ?? []
                 
                 DispatchQueue.main.async {
+                    self.musicList = musicResponse ?? []
                     self.tableView.reloadData()
                 }
             case .failure(let error):
