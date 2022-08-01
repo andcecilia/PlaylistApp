@@ -14,6 +14,8 @@ class MusicListViewController: UIViewController {
     var id = 0
     var musicList = [Music]()
     
+    private var username: String?
+    
     // TODO: Criar o botão de `+`
     private lazy var addMusicButton: UIButton = {
         let button = UIButton()
@@ -34,7 +36,11 @@ class MusicListViewController: UIViewController {
         
         setUpTableView()
         
-        fetchMusicList(username: "Ceci")
+        fetchMusicList(username: username ?? String())
+    }
+    
+    public func configure(with username: String?) {
+        self.username = username
     }
     
     private func setUpTableView() {
@@ -80,10 +86,10 @@ class MusicListViewController: UIViewController {
     // TODO: Criar função para fazer o `post` de `artist` e `title` como parâmetros
     func postMusic(artist: String, title: String) {
         id += 1
-        Network.shared.postMusic(id: id, artist: artist, title: title, username: "Ceci")
+        Network.shared.postMusic(id: id, artist: artist, title: title, username: self.username ?? String())
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-            self.fetchMusicList(username: "Ceci")
+            self.fetchMusicList(username: self.username ?? String())
             self.tableView.reloadData()
         }
         

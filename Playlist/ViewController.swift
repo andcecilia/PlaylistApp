@@ -52,7 +52,7 @@ class ViewController: UIViewController {
                 // Se existir, iremos criar a tela de lista de musicas e chamar ela passando o parametro 'userTextField.text'
                 if !self.usernameList.isEmpty {
                     // Chamar a função que chama a tela de músicas
-                    self.showMusicListViewController()
+                    self.showMusicListViewController(username: self.username)
                 } else {
                     //Se nao existir, mandar uma alert com a mensagem de 'usuario nao cadastrado' e com o botao de ok, enviar para tela RegisterViewController
                     self.showAlertView()
@@ -82,10 +82,11 @@ class ViewController: UIViewController {
     }
     
     // TODO: Criar função que chama a tela de lista de músicas (MusicListViewController) passando `username` como parâmetro
-    private func showMusicListViewController() {
+    private func showMusicListViewController(username: String) {
         DispatchQueue.main.async {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             if let musicListViewController = storyboard.instantiateViewController(withIdentifier: "MusicListViewController") as? MusicListViewController {
+                musicListViewController.configure(with: username)
                 self.navigationController?.pushViewController(musicListViewController, animated: true)
             }
         }
