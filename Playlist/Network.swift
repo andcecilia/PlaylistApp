@@ -143,5 +143,45 @@ class Network {
         }
         task.resume()
     }
+//    "/music/{username}/{id}"
+    func deleteMusic(username: String, id: Int) {
+        guard let url = URL(string: UrlEndpoint.api.rawValue + Endpoint.music.rawValue + "/\(username)" + "/\(id)" ) else {
+                       return
+                   }
+                   
+                   do {
+                       var request = URLRequest(url: url)
+                       request.httpMethod = "DELETE"
+                       request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                       let body: [String: AnyHashable] = [
+                           "id": id,
+                           "username": username
+                       ]
+                       
+                       let data = try? JSONSerialization.data(withJSONObject: body, options: [])
+                       request.httpBody = data
+                       
+                       let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                           guard let response = response as? HTTPURLResponse else {
+                               return
+                           }
+                           
+                           switch response.statusCode {
+                           case 200 ..< 300:
+                               debugPrint("Deu bom deletar a música")
+                               
+                           case 400 ..< 500:
+                               debugPrint("StatusCode: \(response.statusCode)")
+                               
+                           default:
+                               return
+                           }
+                           
+                       }
+                       
+                       task.resume()
+                   }
+        
+    }
     
 }
