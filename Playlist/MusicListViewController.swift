@@ -14,6 +14,8 @@ class MusicListViewController: UIViewController {
     var id: Int?
     var musicList = [Music]()
     var idList = [Int]()
+    var musicTitle: String?
+    var artistName: String?
     
     private var username: String?
     
@@ -55,15 +57,17 @@ class MusicListViewController: UIViewController {
     @objc func didTapAddMusicButton() {
         
         // TODO: criar o alert para pegar as informações de `artist` e `title`
-        let alert = UIAlertController(title: "Teste",
-                                      message: "Teste",
+        let alert = UIAlertController(title: String(),
+                                      message: "Add artist and music",
                                       preferredStyle: .alert)
         
         alert.addTextField { firstTextfield in
             firstTextfield.placeholder = "Type the artist name"
+            firstTextfield.clearButtonMode = .whileEditing
         }
         
         alert.addTextField { secondTextField in
+            secondTextField.clearButtonMode = .whileEditing
             secondTextField.placeholder = "Type the music title"
         }
         
@@ -163,8 +167,52 @@ extension MusicListViewController: UITableViewDelegate {
             self?.deleteRow(indexPath)
             completionHandler(true)
         }
+        
+        delete.image = UIImage(systemName: "trash")
 
-        let configuration = UISwipeActionsConfiguration(actions: [delete])
+        let update = UIContextualAction(style: .normal,
+                                        title: "Update") { [weak self] (action, view, completionHandler) in
+            
+            // TODO: criar o alert para pegar as informações de `artist` e `title`
+            let alert = UIAlertController(title: String(),
+                                          message: "Update the infos",
+                                          preferredStyle: .alert)
+            alert.addTextField { firstTextfield in
+                firstTextfield.placeholder = "Type the artist name"
+                firstTextfield.clearButtonMode = .always
+                firstTextfield.text = self?.musicList[indexPath.row].artist
+            }
+            
+            alert.addTextField { secondTextField in
+                secondTextField.placeholder = "Type the music title"
+                secondTextField.clearButtonMode = .always
+                secondTextField.text = self?.musicList[indexPath.row].title
+            }
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            alert.addAction(UIAlertAction(title: "Update",
+                                          style: .default,
+                                          handler: { [weak alert] _ in
+                guard let textFields = alert?.textFields else { return }
+                if let firstText = textFields[0].text,
+                   let secondText = textFields[1].text {
+                    
+                    // Chamar a função para fazer o `post` de `artist` e `title` como parâmetros
+                    self?.updateMusic(artist: firstText,
+                                      title: secondText,
+                                      indexPath: indexPath)
+                }
+            }))
+            
+            DispatchQueue.main.async {
+                self?.present(alert, animated: true)
+            }
+            
+            completionHandler(true)
+        }
+        
+        
+        let configuration = UISwipeActionsConfiguration(actions: [delete, update])
 
         return configuration
     }
@@ -178,5 +226,19 @@ extension MusicListViewController: UITableViewDelegate {
         tableView.endUpdates()
     }
     
-    // TODO: Função que vai fazer o edit (chamar a API de edit) da linha}
+    // TODO: Função que vai fazer o edit (chamar a API de edit) da linha
+    func updateMusic(artist: String,
+                     title: String,
+                     indexPath: IndexPath) {
+        Network.shared.updateMusic(id: musicList[indexPath.row].id ?? 0,
+                                   artist: artist,
+                                   title: title,
+                                   username: musicList[indexPath.row].username ?? String())
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+            self.fetchMusicList(username: self.username ?? String())
+            self.tableView.reloadData()
+        }
+    }
+    
 }
