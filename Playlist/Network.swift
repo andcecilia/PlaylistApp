@@ -44,7 +44,7 @@ class Network {
         task.resume()
     }
     
-    func postUser(name: String, username: String) {
+    func postUser(name: String, username: String, onComplete: @escaping (_ success: Bool) -> Void) {
         guard let url = URL(string: UrlEndpoint.api.rawValue + Endpoint.user.rawValue) else {
             return
         }
@@ -69,10 +69,12 @@ class Network {
                 switch response.statusCode {
                 case 200 ..< 300:
                     // TODO: criar um bloco de @escaping para poder apresentar o lottie de `check`
+                    onComplete(true)
                     debugPrint("Deu bom")
                     
                 case 400 ..< 500:
                     // TODO: criar um bloco de @escaping para poder apresentar um alert contendo uma mensagem de erro
+                    onComplete(false)
                     debugPrint("StatusCode: \(response.statusCode)")
                     
                 default:

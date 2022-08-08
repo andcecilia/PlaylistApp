@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import Lottie
 
 class RegisterViewController: UIViewController {
+    
+    lazy var checkAnimation = Animation.named("lottiecheck", bundle: .main)
     
     //MARK: - Outlets
     @IBOutlet weak var nameLabel: UILabel!
@@ -15,13 +18,15 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var userTextField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var checkAnimationView: AnimationView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Inicializar o botao "registerButton" como desabilitado (false)
         registerButton.isEnabled = false
-        
+        // Esconder a animação com o 'check' de quando se cria a conta
+        checkAnimationView.isHidden = true
         // Adicionar listener nas UITextField para quando o evento de edição for executado
         [nameTextField, userTextField].forEach({ $0?.addTarget(self,
                                                                action: #selector(editingChanged),
@@ -37,7 +42,18 @@ class RegisterViewController: UIViewController {
         }
 
             // Faz a chamada de POST para a API
-        Network.shared.postUser(name: name, username: username)
+        Network.shared.postUser(name: name, username: username) { result in
+            switch result {
+                case true:
+                DispatchQueue.main.async {
+                    self.hideRegisterElements()
+                    self.showCheckAnimation()
+                }
+                
+            case false:
+                debugPrint("Deu ruim")
+            }
+        }
     }
     
     // Função que verifica se as UITextField estão vazias e habilita/desabilita o botão
@@ -51,6 +67,25 @@ class RegisterViewController: UIViewController {
         }
         
         registerButton.isEnabled = true
+    }
+    
+    func hideRegisterElements() {
+        [nameLabel,
+         nameTextField,
+         userLabel,
+         userTextField,
+         registerButton].forEach({ $0?.isHidden = true })
+    }
+    
+    func showCheckAnimation() {
+        checkAnimationView.isHidden = false
+        checkAnimationView.animation = checkAnimation
+        checkAnimationView.contentMode = .scaleAspectFill
+        checkAnimationView.loopMode = .playOnce
+        checkAnimationView.play { (finished) in
+            self.checkAnimationView.isHidden = true
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
     
 }

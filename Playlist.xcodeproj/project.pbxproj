@@ -10,6 +10,8 @@
 		2E193AF82893665300F7A4FE /* MusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E193AF62893665300F7A4FE /* MusicTableViewCell.swift */; };
 		2E193AF92893665300F7A4FE /* MusicTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E193AF72893665300F7A4FE /* MusicTableViewCell.xib */; };
 		2E193AFB2893694D00F7A4FE /* NibReusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E193AFA2893694D00F7A4FE /* NibReusable.swift */; };
+		2E22344928A09A370086E3BF /* lottiecheck.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E22344828A09A360086E3BF /* lottiecheck.json */; };
+		2E22344C28A09B2C0086E3BF /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 2E22344B28A09B2C0086E3BF /* Lottie */; };
 		2E6154C1288DDD1100BA2694 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6154C0288DDD1100BA2694 /* AlertView.swift */; };
 		2E6154C3288DEB2500BA2694 /* MusicListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6154C2288DEB2500BA2694 /* MusicListViewController.swift */; };
 		2E7C14F72887666300E8E2C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C14F62887666300E8E2C8 /* AppDelegate.swift */; };
@@ -28,6 +30,7 @@
 		2E193AF62893665300F7A4FE /* MusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTableViewCell.swift; sourceTree = "<group>"; };
 		2E193AF72893665300F7A4FE /* MusicTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicTableViewCell.xib; sourceTree = "<group>"; };
 		2E193AFA2893694D00F7A4FE /* NibReusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibReusable.swift; sourceTree = "<group>"; };
+		2E22344828A09A360086E3BF /* lottiecheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = lottiecheck.json; sourceTree = "<group>"; };
 		2E6154C0288DDD1100BA2694 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		2E6154C2288DEB2500BA2694 /* MusicListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListViewController.swift; sourceTree = "<group>"; };
 		2E7C14F32887666300E8E2C8 /* Playlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Playlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,12 +52,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E22344C28A09B2C0086E3BF /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E22344728A09A140086E3BF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2E22344828A09A360086E3BF /* lottiecheck.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		2E6154BF288DDCFC00BA2694 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +95,7 @@
 		2E7C14F52887666300E8E2C8 /* Playlist */ = {
 			isa = PBXGroup;
 			children = (
+				2E22344728A09A140086E3BF /* Resources */,
 				2E6154BF288DDCFC00BA2694 /* Utils */,
 				2E7C150E2887782600E8E2C8 /* Model */,
 				2E7C14F62887666300E8E2C8 /* AppDelegate.swift */,
@@ -126,6 +139,9 @@
 			dependencies = (
 			);
 			name = Playlist;
+			packageProductDependencies = (
+				2E22344B28A09B2C0086E3BF /* Lottie */,
+			);
 			productName = Playlist;
 			productReference = 2E7C14F32887666300E8E2C8 /* Playlist.app */;
 			productType = "com.apple.product-type.application";
@@ -154,6 +170,9 @@
 				Base,
 			);
 			mainGroup = 2E7C14EA2887666300E8E2C8;
+			packageReferences = (
+				2E22344A28A09B2C0086E3BF /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = 2E7C14F42887666300E8E2C8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -171,6 +190,7 @@
 				2E7C15032887666400E8E2C8 /* LaunchScreen.storyboard in Resources */,
 				2E7C15002887666400E8E2C8 /* Assets.xcassets in Resources */,
 				2E7C14FE2887666300E8E2C8 /* Main.storyboard in Resources */,
+				2E22344928A09A370086E3BF /* lottiecheck.json in Resources */,
 				2E193AF92893665300F7A4FE /* MusicTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,6 +430,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2E22344A28A09B2C0086E3BF /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2E22344B28A09B2C0086E3BF /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2E22344A28A09B2C0086E3BF /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2E7C14EB2887666300E8E2C8 /* Project object */;
 }
