@@ -52,6 +52,12 @@ class RegisterViewController: UIViewController {
                 
             case false:
                 debugPrint("Deu ruim")
+                DispatchQueue.main.async {
+                    AlertView.showAlert(view: self,
+                                        title: "Ops",
+                                        message: "User already exists!",
+                                        onComplete: {self.dismiss(animated: true)})
+                }
             }
         }
     }

@@ -95,7 +95,7 @@ class ViewController: UIViewController {
     // Função para chamar a AlertView
     private func showAlertView() {
         DispatchQueue.main.async {
-            AlertView.showAlert(view: self,
+            AlertView.showAlertWithTwoButtons(view: self,
                                 title: "Ops",
                                 message: "User not registered",
                                 okButton: "Register",

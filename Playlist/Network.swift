@@ -72,7 +72,7 @@ class Network {
                     onComplete(true)
                     debugPrint("Deu bom")
                     
-                case 400 ..< 500:
+                case 400 ..< 501:
                     // TODO: criar um bloco de @escaping para poder apresentar um alert contendo uma mensagem de erro
                     onComplete(false)
                     debugPrint("StatusCode: \(response.statusCode)")

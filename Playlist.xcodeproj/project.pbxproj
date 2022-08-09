@@ -24,6 +24,7 @@
 		2E7C150D2887762200E8E2C8 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C150C2887762200E8E2C8 /* Network.swift */; };
 		2E7C15102887783800E8E2C8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C150F2887783800E8E2C8 /* User.swift */; };
 		2EB3F9202890BB110096BC9A /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB3F91F2890BB110096BC9A /* Music.swift */; };
+		2EEFA70928A1DC8A000777D8 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 2EEFA70828A1DC8A000777D8 /* loading.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		2E7C150C2887762200E8E2C8 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		2E7C150F2887783800E8E2C8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2EB3F91F2890BB110096BC9A /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
+		2EEFA70828A1DC8A000777D8 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 		2E22344728A09A140086E3BF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2EEFA70828A1DC8A000777D8 /* loading.json */,
 				2E22344828A09A360086E3BF /* lottiecheck.json */,
 			);
 			path = Resources;
@@ -189,6 +192,7 @@
 			files = (
 				2E7C15032887666400E8E2C8 /* LaunchScreen.storyboard in Resources */,
 				2E7C15002887666400E8E2C8 /* Assets.xcassets in Resources */,
+				2EEFA70928A1DC8A000777D8 /* loading.json in Resources */,
 				2E7C14FE2887666300E8E2C8 /* Main.storyboard in Resources */,
 				2E22344928A09A370086E3BF /* lottiecheck.json in Resources */,
 				2E193AF92893665300F7A4FE /* MusicTableViewCell.xib in Resources */,

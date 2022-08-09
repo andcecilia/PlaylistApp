@@ -9,7 +9,27 @@ import Foundation
 import UIKit
 
 class AlertView: NSObject {
+    
     class func showAlert(view: UIViewController,
+                         title: String,
+                         message: String,
+                         okButton: String? = "Ok",
+                         onComplete: @escaping () -> Void) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: okButton,
+                                      style: .default,
+                                      handler: { alert in
+            onComplete()
+        }))
+        
+        view.present(alert,
+                     animated: true,
+                     completion: nil)
+    }
+    
+    class func showAlertWithTwoButtons(view: UIViewController,
                          title: String,
                          message: String,
                          cancelButton: String? = "Cancel",
