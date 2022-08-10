@@ -72,7 +72,7 @@ class Network {
                     onComplete(true)
                     debugPrint("Deu bom")
                     
-                case 400 ..< 501:
+                case 400 ... 500:
                     // TODO: criar um bloco de @escaping para poder apresentar um alert contendo uma mensagem de erro
                     onComplete(false)
                     debugPrint("StatusCode: \(response.statusCode)")
@@ -145,7 +145,7 @@ class Network {
         }
         task.resume()
     }
-//    "/music/{username}/{id}"
+
     func deleteMusic(username: String, id: Int) {
         guard let url = URL(string: UrlEndpoint.api.rawValue + Endpoint.music.rawValue + "/\(username)" + "/\(id)" ) else {
                        return

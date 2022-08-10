@@ -17,7 +17,7 @@ class MusicListViewController: UIViewController {
     var musicTitle: String?
     var artistName: String?
     
-    private var username: String?
+    private var username: String? // qdo inicia a classe é nil
     
     // TODO: Criar o botão de `+`
     private lazy var addMusicButton: UIButton = {
@@ -31,20 +31,23 @@ class MusicListViewController: UIViewController {
     
     //TODO: Conectar as Outlets
     @IBOutlet weak var tableView: UITableView!
-    
+    // Erick
+    public func configure(with username: String?) {
+        self.username = username
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addMusicButton)
         
         setUpTableView()
-        
-        fetchMusicList(username: username ?? String())
+        guard let username = username else {
+            return
+        }
+
+        fetchMusicList(username: username)
     }
     
-    public func configure(with username: String?) {
-        self.username = username
-    }
     
     private func setUpTableView() {
         // TODO: Registrar a célula (XIB)
@@ -67,8 +70,8 @@ class MusicListViewController: UIViewController {
         }
         
         alert.addTextField { secondTextField in
-            secondTextField.clearButtonMode = .whileEditing
             secondTextField.placeholder = "Type the music title"
+            secondTextField.clearButtonMode = .whileEditing
         }
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -76,11 +79,11 @@ class MusicListViewController: UIViewController {
                                       style: .default,
                                       handler: { [weak alert] _ in
             guard let textFields = alert?.textFields else { return }
-            if let firstText = textFields[0].text,
-               let secondText = textFields[1].text {
+            if let artist = textFields[0].text,
+               let title = textFields[1].text {
                 
                 // Chamar a função para fazer o `post` de `artist` e `title` como parâmetros
-                self.postMusic(artist: firstText, title: secondText)
+                self.postMusic(artist: artist, title: title)
             }
         }))
         
@@ -91,10 +94,18 @@ class MusicListViewController: UIViewController {
     
     // TODO: Criar função para fazer o `post` de `artist` e `title` como parâmetros
     func postMusic(artist: String, title: String) {
-        Network.shared.postMusic(id: id ?? 1, artist: artist, title: title, username: self.username ?? String())
+        //id e username vem das variáveis globais
+        guard let id = id, let username = self.username else {
+            return
+        }
+        
+        Network.shared.postMusic(id: id,
+                                 artist: artist,
+                                 title: title,
+                                 username: username)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-            self.fetchMusicList(username: self.username ?? String())
+            self.fetchMusicList(username: username)
             self.tableView.reloadData()
         }
         
@@ -109,27 +120,30 @@ class MusicListViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     //adding musicResponse into musicList
-                    self.musicList = musicResponse ?? []
+                    if let response = musicResponse {
+                    self.musicList = response
                     // Percorrer o array de musicResponse
                     debugPrint("id global antes do for: \(self.id)")
-                    musicResponse!.forEach({
-                        // Se o id (variável global) for nil, então id (variável global) vai receber do musicResponse.id (valor do back e ele sobrescreve)
-                        if self.id == nil {
-                            self.id = $0.id
-                            debugPrint("id global caso valor seja nil: \(self.id)")
-                            debugPrint("musicResponse.id: \($0.id)")
-                        } else {
-                            // Se o valor do id (variável global) for diferente do valor que vem do musicResponse.id (valor do back), então id (variável global) vai receber do musicResponse.id (valor do back e ele sobrescreve)
-                            if self.id != $0.id {
+                        response.forEach({
+                            // Se o id (variável global) for nil, então id (variável global) vai receber do musicResponse.id (valor do back e ele sobrescreve)
+                            if self.id == nil {
                                 self.id = $0.id
-                                debugPrint("id global caso valor seja diferente do valor vindo do back: \(self.id)")
+                                debugPrint("id global caso valor seja nil: \(self.id)")
                                 debugPrint("musicResponse.id: \($0.id)")
+                            } else {
+                                // Se o valor do id (variável global) for diferente do valor que vem do musicResponse.id (valor do back), então id (variável global) vai receber do musicResponse.id (valor do back e ele sobrescreve)
+                                if self.id != $0.id {
+                                    self.id = $0.id
+                                    debugPrint("id global caso valor seja diferente do valor vindo do back: \(self.id)")
+                                    debugPrint("musicResponse.id: \($0.id)")
+                                }
                             }
-                        }
-                    })
-                    
-                    self.tableView.reloadData()
+                        })
+                        
+                        self.tableView.reloadData()
+                    }
                 }
+                
             case .failure(let error):
                 debugPrint(error)
             }
@@ -155,21 +169,20 @@ extension MusicListViewController: UITableViewDataSource {
 }
 
 extension MusicListViewController: UITableViewDelegate {
-    //This fucntion let table view knows you can delete a music entry
+    //This function let table view knows you can swipe a music entry
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    // TODO: Função da TableView que faz a ação dos swipes e chama as funções de deletar e editar
+    // TODO: Função da TableView que faz a ação dos swipes e chama as funções de deletar e editar, deslizando da direita para a esquerda (trailing)
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive,
                                         title: "Delete") { [weak self] (action, view, completionHandler) in
             self?.deleteRow(indexPath)
             completionHandler(true)
         }
-        
         delete.image = UIImage(systemName: "trash")
-
+        
         let update = UIContextualAction(style: .normal,
                                         title: "Update") { [weak self] (action, view, completionHandler) in
             
@@ -194,12 +207,12 @@ extension MusicListViewController: UITableViewDelegate {
                                           style: .default,
                                           handler: { [weak alert] _ in
                 guard let textFields = alert?.textFields else { return }
-                if let firstText = textFields[0].text,
-                   let secondText = textFields[1].text {
+                if let artist = textFields[0].text,
+                   let title = textFields[1].text {
                     
                     // Chamar a função para fazer o `post` de `artist` e `title` como parâmetros
-                    self?.updateMusic(artist: firstText,
-                                      title: secondText,
+                    self?.updateMusic(artist: artist,
+                                      title: title,
                                       indexPath: indexPath)
                 }
             }))
@@ -213,7 +226,7 @@ extension MusicListViewController: UITableViewDelegate {
         
         
         let configuration = UISwipeActionsConfiguration(actions: [delete, update])
-
+        
         return configuration
     }
     

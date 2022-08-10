@@ -34,8 +34,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func didTapLoginButton(_ sender: Any) {
-        Network.shared.fetchUsers(name: nameTextField.text!,
-                                  username:userTextField.text!,
+        Network.shared.fetchUsers(name: self.name,
+                                  username: self.username,
                                   completion: { result in
             switch result {
             case .success(let userResponse):
@@ -47,12 +47,13 @@ class ViewController: UIViewController {
                     }
                 })
                 
+                //Filtra o username encontrado no userResonse e salva como único item da lista usernameList
                 self.usernameList = self.usernameList.filter { $0 == self.username }
                 
-                // Se existir, iremos criar a tela de lista de musicas e chamar ela passando o parametro 'userTextField.text'
+                // Se essa lista usernameList não estiver vazia, iremos criar a tela de lista de musicas e chamar ela passando o parametro 'userTextField.text'
                 if !self.usernameList.isEmpty {
                     // Chamar a função que chama a tela de músicas
-                    self.showMusicListViewController(username: self.username)
+                    self.showMusicListViewController(self.username)
                 } else {
                     //Se nao existir, mandar uma alert com a mensagem de 'usuario nao cadastrado' e com o botao de ok, enviar para tela RegisterViewController
                     self.showAlertView()
@@ -82,7 +83,7 @@ class ViewController: UIViewController {
     }
     
     // TODO: Criar função que chama a tela de lista de músicas (MusicListViewController) passando `username` como parâmetro
-    private func showMusicListViewController(username: String) {
+    private func showMusicListViewController(_ username: String) {
         DispatchQueue.main.async {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             if let musicListViewController = storyboard.instantiateViewController(withIdentifier: "MusicListViewController") as? MusicListViewController {
