@@ -95,11 +95,11 @@ class MusicListViewController: UIViewController {
     // TODO: Criar função para fazer o `post` de `artist` e `title` como parâmetros
     func postMusic(artist: String, title: String) {
         //id e username vem das variáveis globais
-        guard let id = id, let username = self.username else {
+        guard let username = self.username else {
             return
         }
         
-        Network.shared.postMusic(id: id,
+        Network.shared.postMusic(id: id ?? 1,
                                  artist: artist,
                                  title: title,
                                  username: username)
@@ -125,9 +125,9 @@ class MusicListViewController: UIViewController {
                     // Percorrer o array de musicResponse
                     debugPrint("id global antes do for: \(self.id)")
                         response.forEach({
-                            // Se o id (variável global) for nil, então id (variável global) vai receber do musicResponse.id (valor do back e ele sobrescreve)
+                            // Se o id (variável global) for nil, então id (variável global) vai receber valor `1` como default para enviar para o back
                             if self.id == nil {
-                                self.id = $0.id
+                                self.id = 1
                                 debugPrint("id global caso valor seja nil: \(self.id)")
                                 debugPrint("musicResponse.id: \($0.id)")
                             } else {
